@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Get coords API</title>   
+  </head>
+  <body>
+    <h3>Geolocation-API</h3>
+    <!--The div element for the map -->
+    <button onclick="watchPosition()">
+       Watch My Position!
+    </button>
+    <button onclick="stopWatching()">
+      Stop Watching
+    </button>
+  </body>
+  <script>
+    function watchPosition() {
+      if (navigator.geolocation) {
+        watchId = navigator.geolocation.watchPosition(success);
+      }
+    }
+    function stopWatching() {
+       if (navigator.geolocation) {
+        navigator.geolocation.clearWatch(watchId);
+       }
+    }
+    var watchId = -1;
+
+    function error(err) {
+       var info = "Erreur lors de la géolocalisation : ";
+      switch(error.code) {
+          case error.TIMEOUT:
+    	    info += "Timeout !";
+          break;
+        case error.PERMISSION_DENIED:
+	        info += "Vous n’avez pas donné la permission";
+          break;
+        case error.POSITION_UNAVAILABLE:
+    	    info += "La position n’a pu être déterminée";
+        break;
+        case error.UNKNOWN_ERROR:
+    	    info += "Erreur inconnue";
+        break;
+      }
+    }
+
+    function success(pos) {
+        alert(`latitude: ${pos.coords.latitude}
+        \n longitude: ${pos.coords.longitude}
+        \n accuracy: ${pos.coords.accuracy}`);
+    }
+  </script>
+</html>
